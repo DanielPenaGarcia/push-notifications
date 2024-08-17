@@ -1,5 +1,42 @@
 # Push notifications with Angular and Ionic with firebase
 
+# Requires
+
+## App
+
+- `*src/environments/environment*`
+- `*src/environments/environment.prod.ts*`
+
+```tsx
+export const environment = {
+	production = false,
+  apiUrl: '',
+  firebaseConfig: {
+    apiKey: '',
+    authDomain: '',
+    projectId: '',
+    storageBucket: '',
+    messagingSenderId: '',
+    appId: '',
+  },
+};
+```
+
+```tsx
+export const environment = {
+	production = true,
+  apiUrl: '',
+  firebaseConfig: {
+    apiKey: '',
+    authDomain: '',
+    projectId: '',
+    storageBucket: '',
+    messagingSenderId: '',
+    appId: '',
+  },
+};
+```
+
 # App with Angular and Ionic
 
 ## Ionic commands
@@ -61,6 +98,22 @@ From Android 8.0 (API level 26) and higher, notification channels are supported 
 
 ### In this case, I didn’t use a default channel in the AndroidManifest.
 
+## Add google-services.json from firebase console.
+
+Project in console>Project Settings > General [add app]
+
+![image.png](Push%20notifications%20with%20Angular%20and%20Ionic%20with%20fir%2058113f93c3434cdbaef70e868126374b/image.png)
+
+![image.png](Push%20notifications%20with%20Angular%20and%20Ionic%20with%20fir%2058113f93c3434cdbaef70e868126374b/image%201.png)
+
+Select **Android version**
+
+![image.png](Push%20notifications%20with%20Angular%20and%20Ionic%20with%20fir%2058113f93c3434cdbaef70e868126374b/image%202.png)
+
+Complete the form, then download `google-services.json` and follow the steps.
+
+![image.png](Push%20notifications%20with%20Angular%20and%20Ionic%20with%20fir%2058113f93c3434cdbaef70e868126374b/image%203.png)
+
 ---
 
 ## Capacitor Plugins
@@ -84,7 +137,7 @@ export default config;
 
 ## Push notification service
 
-I created a `PushNotificationService.ts` applying singletone pattern.
+I created a `PushNotificationService.ts` applying **singletone** pattern.
 
 ```tsx
 export class PushNotificationsService {
@@ -255,7 +308,7 @@ To use the Firebase service, you have to add it in the following way.
 
 firebase file is `firebase-service-account-key.json`  from firebase. Project in console>Project Settings > Service accounts [Firebase Admin SDK > Generate new private key]
 
-![image.png](Push%20notifications%20with%20Angular%20and%20Ionic%20with%20fir%2058113f93c3434cdbaef70e868126374b/image.png)
+![image.png](Push%20notifications%20with%20Angular%20and%20Ionic%20with%20fir%2058113f93c3434cdbaef70e868126374b/image%204.png)
 
 ```tsx
 import { Provider } from "@nestjs/common";
