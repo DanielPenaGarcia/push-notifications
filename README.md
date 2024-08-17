@@ -240,3 +240,121 @@ bootstrapApplication(AppComponent, {
   ],
 });
 ```
+
+---
+
+# API with NestJs
+
+```powershell
+npm install firebase-admin
+```
+
+Para usar la el servicio, se agrega de la siguiente manera.
+
+To use the Firebase service, you have to add it in the following way.
+
+firebase file is `firebase-service-account-key.json`  from firebase. Project in console>Project Settings > Service accounts [Firebase Admin SDK > Generate new private key]
+
+![image.png](Push%20notifications%20with%20Angular%20and%20Ionic%20with%20fir%2058113f93c3434cdbaef70e868126374b/image.png)
+
+```tsx
+import { Provider } from "@nestjs/common";
+import * as firebase from "firebase-admin";
+import * as serviceAccountJSON from "../configs/firebase-service-account-key.json";
+
+const serviceAccount = {
+    "type": serviceAccountJSON.type,
+    "projectId": serviceAccountJSON.project_id,
+    "privateKeyId": serviceAccountJSON.private_key_id,
+    "privateKey": serviceAccountJSON.private_key,
+    "clientEmail": serviceAccountJSON.client_email,
+    "clientId": serviceAccountJSON.client_id,
+    "authUri": serviceAccountJSON.auth_uri,
+    "tokenUri": serviceAccountJSON.token_uri,
+    "authProviderX509CertUrl": serviceAccountJSON.auth_provider_x509_cert_url,
+    "clientX509CertUrl": serviceAccountJSON.client_x509_cert_url,
+    "universeDomain": serviceAccountJSON.universe_domain
+}
+
+const firebaseApp = firebase.initializeApp({
+    credential: firebase.credential.cert(serviceAccount)
+});
+
+export const FIREBASE_APP = "FIREBASE_APP";
+
+export const firebaseAdminProvider: Provider = {
+    provide: FIREBASE_APP,
+    useValue: firebaseApp
+}
+```
+
+**`utils.module.ts`**
+
+```tsx
+@Module({
+  providers: [UtilsService, firebaseAdminProvider],
+  exports: [UtilsService, firebaseAdminProvider],
+})
+export class UtilsModule {}
+```
+
+**`tasks.module.ts`**
+
+```tsx
+import { UtilsModule } from 'notification/utils';
+
+@Module({
+    imports: [EntitiesModule, UtilsModule],
+    controllers: [TasksController],
+    providers: [TasksService, CompleteGroupTaskListener],
+})
+export class TasksModule {}
+```
+
+**`complete-group-task.listener.ts`**
+
+```tsx
+import { Inject, Injectable } from '@nestjs/common';
+import * as firebase from 'firebase-admin';
+import { FIREBASE_APP } from 'notification/utils/providers/firebase-admin.provider';
+
+@Injectable()
+export class CompleteGroupTaskListener {
+  constructor(
+    @Inject(FIREBASE_APP) private readonly firebaseService: firebase.app.App,
+  ) {}
+}
+```
+
+### Send notification to topic
+
+```tsx
+private async sendTaskCompletedNotification(event: CompleteGroupTaskEvent) {
+    try {
+      await this.firebaseService.messaging().sendEach([
+        {
+          topic: event.groupCode,
+          notification: {
+            title: `Task ${event.taskTitle} completed`,
+            body: `Task completed by ${event.userName} in group ${event.groupName}`,
+          },
+          data: {
+            groupId: event.groupId,
+            groupName: event.groupName,
+            userTokenDevice: event.userTokenDevice || '',
+          },
+          android: {
+            notification: { 
+              channelId: 'task-completed',
+            }
+          }
+        },
+      ]);
+    } catch (error) {
+      console.error(
+        `Error sending task completed notification to group ${event.groupName}`,
+        error,
+      );
+    }
+  }
+```
