@@ -1,0 +1,21 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "notification/entities/(.*)": "<rootDir>/../libs/entities/src/$1",
+    "notification/entities": "<rootDir>/../libs/entities/src",
+    "notification/utils/(.*)": "<rootDir>/../libs/utils/src/$1",
+    "notification/utils": "<rootDir>/../libs/utils/src",
+    "notification/security/(.*)": "<rootDir>/../libs/security/src/$1",
+    "notification/security": "<rootDir>/../libs/security/src"
+  }
+}
