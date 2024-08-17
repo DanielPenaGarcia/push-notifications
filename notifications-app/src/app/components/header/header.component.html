@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> {{title}} </ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="isMobile" shape="round" fill="clear" (click)="notifications()">
+        <ion-icon [color]="hasNotifications? 'primary' : 'medium'" name="notifications"></ion-icon>
+      </ion-button>
+      <ion-button shape="round" fill="clear" (click)="signOut()">
+        <ion-icon color="danger" size="large" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

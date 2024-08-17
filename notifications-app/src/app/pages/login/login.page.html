@@ -1,0 +1,28 @@
+<ion-content class="ion-padding" [fullscreen]="true">
+  <form [formGroup]="loginForm">
+    <ion-list>
+      <ion-item>
+        <ion-input
+          formControlName="email"
+          aria-label="Email"
+          type="email"
+          placeholder="Email"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          formControlName="password"
+          aria-label="Password"
+          type="password"
+          placeholder="Password"
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button color="success" (click)="loginSubmit()" expand="block">
+      Iniciar Sesión
+    </ion-button>
+    <ion-button (click)="registerSubmit()" expand="block">
+      Crear Cuenta
+    </ion-button>
+  </form>
+</ion-content>

@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="groupName"> {{ groupName }} </ion-title>
+    <ion-buttons slot="end">
+      <ion-button shape="round" fill="clear" (click)="closeModal()">
+        <ion-icon size="large" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-content>
+    <ion-list lines="full" [inset]="true">
+      <ion-item *ngIf="tasks.length === 0">
+        <ion-label>
+          <h2>No tasks found</h2>
+        </ion-label>
+      </ion-item>
+      <app-task-item *ngFor="let task of tasks" [task]="task" (taskDeleted)="onTaskDeleted($event)"></app-task-item>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-content>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="createTask()"> Add Task </ion-button>
+  </ion-toolbar>
+</ion-footer>

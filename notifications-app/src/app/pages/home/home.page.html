@@ -1,0 +1,21 @@
+<app-header #headerComponent [title]="headerTitle"></app-header>
+<ion-content [fullscreen]="true">
+  <ion-content>
+    <ion-list [inset]="true" lines="full">
+      <ion-item *ngIf="tasks.length === 0">
+        <ion-label>
+          <h2>No tasks found</h2>
+        </ion-label>
+      </ion-item>
+      <app-task-item *ngFor="let task of tasks" [task]="task" (taskDeleted)="onTaskDeleted($event)"></app-task-item>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-content>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="createTask()"> Add Task </ion-button>
+  </ion-toolbar>
+</ion-footer>

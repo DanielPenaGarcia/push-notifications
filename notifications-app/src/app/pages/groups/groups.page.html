@@ -1,0 +1,26 @@
+<app-header #headerComponent [title]="headerTitle"></app-header>
+<ion-content [fullscreen]="true">
+  <ion-content>
+    <ion-list lines="full" [inset]="true">
+      <ion-item *ngIf="groups.length === 0">
+        <ion-label>
+          <h2>No groups found</h2>
+        </ion-label>
+      </ion-item>
+      <app-group-item *ngFor="let group of groups" [group]="group" (groupDeleted)="onGroupDeleted($event)"></app-group-item>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-content>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="createGroupAlert()"
+      >Create Group</ion-button
+    >
+    <ion-button expand="block" fill="outline" (click)="addGroupAlert()"
+      >Add Group</ion-button
+    >
+  </ion-toolbar>
+</ion-footer>
