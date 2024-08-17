@@ -411,3 +411,9 @@ private async sendTaskCompletedNotification(event: CompleteGroupTaskEvent) {
     }
   }
 ```
+
+---
+
+# References
+
+### [**@capacitor/push-notifications**](https://ionicframework.com/docs/native/push-notifications#push-notifications-icon)
