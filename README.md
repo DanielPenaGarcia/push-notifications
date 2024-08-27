@@ -61,9 +61,7 @@ This plugin will use the following project variables (defined in your app's `va
 - `firebaseMessagingVersion` version of `com.google.firebase:firebase-messaging` (default: 23.3.1)
 
 ```groovy
-ext {
-	firebaseMessagingVersion = '23.3.1'
-}
+firebaseMessagingVersion = '23.3.1'
 ```
 
 ## Push Notification Icon
